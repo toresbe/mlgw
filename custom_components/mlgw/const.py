@@ -221,8 +221,8 @@ reverse_ml_selectedsourcedict = {v.upper(): k for k, v in ml_selectedsourcedict.
 
 ml_selectedsource_type_dict = dict(
     [
-        ("VIDEO", (ML_SRC_TV, ML_SRC_V_MEM, ML_SRC_DVD2, ML_SRC_DTV, ML_SRC_DVD, ML_SRC_V_AUX, ML_SRC_DOORCAM)),
-        ("VIDEO_PAUSABLE", (ML_SRC_DVD2, ML_SRC_DVD)),
+        ("VIDEO", (ML_SRC_V_MEM, ML_SRC_DVD2, ML_SRC_DTV, ML_SRC_DVD, ML_SRC_V_AUX, ML_SRC_DOORCAM)),
+        ("VIDEO_PAUSABLE", (ML_SRC_TV, ML_SRC_DVD2, ML_SRC_DVD)),
         ("AUDIO", (ML_SRC_RADIO, ML_SRC_A_MEM, ML_SRC_N_MUSIC, ML_SRC_N_RADIO, ML_SRC_CD, ML_SRC_A_AUX, ML_SRC_PC)),
         ("AUDIO_PAUSABLE", (ML_SRC_CD, ML_SRC_A_MEM)),
     ]
