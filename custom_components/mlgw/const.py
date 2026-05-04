@@ -177,25 +177,43 @@ ml_destselectordict = dict(
 reverse_ml_destselectordict = {v.upper(): k for k, v in ml_destselectordict.items()}
 
 
+# MasterLink Source Constants
+ML_SRC_NONE = 0x00
+ML_SRC_TV = 0x0B
+ML_SRC_V_MEM = 0x15
+ML_SRC_DVD2 = 0x16
+ML_SRC_DTV = 0x1F
+ML_SRC_DVD = 0x29
+ML_SRC_V_AUX = 0x33
+ML_SRC_DOORCAM = 0x3E
+ML_SRC_PC = 0x47
+ML_SRC_RADIO = 0x6F
+ML_SRC_A_MEM = 0x79
+ML_SRC_N_MUSIC = 0x7A
+ML_SRC_CD = 0x8D
+ML_SRC_A_AUX = 0x97
+ML_SRC_N_RADIO = 0xA1
+ML_SRC_ALL = 0xFE  # Dummy for 'Listen for all sources', have also seen 0xFF as "all"
+
+
 ml_selectedsourcedict = dict(
     [
-        (0x00, "NONE"),
-        (0x0B, "TV"),
-        (0x15, "V.MEM"),
-        (0x16, "DVD2"),
-        (0x1F, "DTV"),
-        (0x29, "DVD"),
-        (0x33, "V.AUX"),
-        (0x3E, "DOORCAM"),
-        (0x47, "PC"),
-        (0x6F, "RADIO"),
-        (0x79, "A.MEM"),
-        (0x7A, "N.MUSIC"),
-        (0x8D, "CD"),
-        (0x97, "A.AUX"),
-        (0xA1, "N.RADIO"),
-        #  Dummy for 'Listen for all sources'
-        (0xFE, "<ALL>"),  # have also seen 0xFF as "all"
+        (ML_SRC_NONE, "NONE"),
+        (ML_SRC_TV, "TV"),
+        (ML_SRC_V_MEM, "V.MEM"),
+        (ML_SRC_DVD2, "DVD2"),
+        (ML_SRC_DTV, "DTV"),
+        (ML_SRC_DVD, "DVD"),
+        (ML_SRC_V_AUX, "V.AUX"),
+        (ML_SRC_DOORCAM, "DOORCAM"),
+        (ML_SRC_PC, "PC"),
+        (ML_SRC_RADIO, "RADIO"),
+        (ML_SRC_A_MEM, "A.MEM"),
+        (ML_SRC_N_MUSIC, "N.MUSIC"),
+        (ML_SRC_CD, "CD"),
+        (ML_SRC_A_AUX, "A.AUX"),
+        (ML_SRC_N_RADIO, "N.RADIO"),
+        (ML_SRC_ALL, "<ALL>"),
     ]
 )
 
@@ -203,10 +221,10 @@ reverse_ml_selectedsourcedict = {v.upper(): k for k, v in ml_selectedsourcedict.
 
 ml_selectedsource_type_dict = dict(
     [
-        ("VIDEO", (0x0B, 0x15, 0x16, 0x1F, 0x29, 0x33, 0x3E)),
-        ("VIDEO_PAUSABLE", (0x16, 0x29)),
-        ("AUDIO", (0x6F, 0x79, 0x7A, 0xA1, 0x8D, 0x97, 0x47)),
-        ("AUDIO_PAUSABLE", (0x8D, 0x7A)),
+        ("VIDEO", (ML_SRC_TV, ML_SRC_V_MEM, ML_SRC_DVD2, ML_SRC_DTV, ML_SRC_DVD, ML_SRC_V_AUX, ML_SRC_DOORCAM)),
+        ("VIDEO_PAUSABLE", (ML_SRC_DVD2, ML_SRC_DVD)),
+        ("AUDIO", (ML_SRC_RADIO, ML_SRC_A_MEM, ML_SRC_N_MUSIC, ML_SRC_N_RADIO, ML_SRC_CD, ML_SRC_A_AUX, ML_SRC_PC)),
+        ("AUDIO_PAUSABLE", (ML_SRC_CD, ML_SRC_A_MEM)),
     ]
 )
 
