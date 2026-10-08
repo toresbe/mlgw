@@ -534,6 +534,15 @@ class MasterLinkGateway:
                     # remember the new source
                     if sourceActivity not in ("Standby", "Unknown"):
                         self._beolink_source = beolink_source
+                    # keep the room's media player on/off in step with what the room reports,
+                    # however it was switched (remote, front panel, another room's Beo4)
+                    if self._devices is not None:
+                        for x in self._devices:
+                            if x._mln == sourceMLN:
+                                if sourceActivity == "Standby":
+                                    x.set_state(STATE_OFF)
+                                elif sourceActivity == "Playing":
+                                    x.set_state(STATE_PLAYING)
                     # change the source of the MLN
                     # reporting the change
                     # not sure this works in all situations
