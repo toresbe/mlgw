@@ -259,6 +259,7 @@ class BeoSpeaker(MediaPlayerEntity):
                         self._pwon = False
                         self._playing = False
                         self.clear_media_info()
+                        self._write_state()
 
                     # I am telling the system I want a source
                     elif _event.data["payload_type"] == "GOTO_SOURCE":
@@ -277,6 +278,7 @@ class BeoSpeaker(MediaPlayerEntity):
                             _event.data["payload"]["sourceID"],
                             _event.data["payload"]["channel_track"],
                         )
+                        self._write_state()
 
                     # I am updating the Status of this source
                     elif _event.data["payload_type"] == "STATUS_INFO":
@@ -397,8 +399,10 @@ class BeoSpeaker(MediaPlayerEntity):
                             if _statusID == _event.data["payload"]["sourceID"]:
                                 if _event.data["payload"]["command"] == "Go / Play":
                                     self._playing = True
+                                    self._write_state()
                                 elif _event.data["payload"]["command"] == "Stop":
                                     self._playing = False
+                                    self._write_state()
 
         if self._gateway._use_mllog:
             self._stop_listening = gateway._hass.bus.async_listen(
@@ -597,6 +601,15 @@ class BeoSpeaker(MediaPlayerEntity):
     def set_ml(self, ml: str):
         self._ml = ml
 
+    def _write_state(self):
+        """Push the current state to Home Assistant.
+
+        The ML listener and the gateway thread change _pwon/_playing behind the entity's back,
+        and Home Assistant only reads them when the entity asks for a state write.
+        """
+        if self.hass is not None:
+            self.schedule_update_ha_state()
+
     def set_state(self, _state):
         """To be called by the gateway to set the state to off when there is an event on the ml bus that turns off the device."""
         if _state == STATE_PLAYING:
@@ -606,6 +619,7 @@ class BeoSpeaker(MediaPlayerEntity):
             self._pwon = False
             self._playing = False
             self.clear_media_info()
+        self._write_state()
 
     def set_source(self, source):
         """To be called by the gateway to set the source (the source is a statusID e.g., radio=0x6f)."""
